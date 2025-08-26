@@ -205,12 +205,12 @@ namespace DCFApixels.DragonECS
 
                 _poolsMediator = new PoolsMediator(this);
 
-                int poolsCapacity = ArrayUtility.NextPow2(config.PoolsCapacity);
+                int poolsCapacity = ArrayUtility.CeilPow2Safe(config.PoolsCapacity);
                 _pools = new IEcsPoolImplementation[poolsCapacity];
                 _poolSlots = new PoolSlot[poolsCapacity];
                 ArrayUtility.Fill(_pools, _nullPool);
 
-                int entitiesCapacity = ArrayUtility.NextPow2(config.EntitiesCapacity);
+                int entitiesCapacity = ArrayUtility.CeilPow2Safe(config.EntitiesCapacity);
                 _entityDispenser = new IdDispenser(entitiesCapacity, 0, OnEntityDispenserResized);
 
                 _executorCoures = new Dictionary<(Type, object), IQueryExecutorImplementation>(config.PoolComponentsCapacity);
@@ -570,12 +570,12 @@ namespace DCFApixels.DragonECS
                             count++;
                         }
                     }
-                    if(count == 0)
+                    if (count == 0)
                     {
                         return false;
                     }
                 }
-                
+
                 return true;
             }
             bool deepDebug = IsMatchesMaskDeepDebug(mask, entityID);

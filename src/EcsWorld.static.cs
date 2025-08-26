@@ -235,9 +235,9 @@ namespace DCFApixels.DragonECS
                     }
                     ref short itemIndex = ref _mapping[worldID];
 #if DEBUG && DRAGONECS_DEEP_DEBUG
-                    if (itemIndex >= _worlds.Length) 
-                    { 
-                        Throw.UndefinedException(); 
+                    if (itemIndex >= _worlds.Length)
+                    {
+                        Throw.UndefinedException();
                     }
 #endif
                     if (itemIndex != 0)

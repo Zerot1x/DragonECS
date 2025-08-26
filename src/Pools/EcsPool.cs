@@ -94,7 +94,7 @@ namespace DCFApixels.DragonECS
         public EcsPool() { }
         public EcsPool(int capacity, int recycledCapacity = -1)
         {
-            capacity = ArrayUtility.NextPow2(capacity);
+            capacity = ArrayUtility.CeilPow2Safe(capacity);
             if (recycledCapacity < 0)
             {
                 recycledCapacity = capacity / 2;
@@ -113,7 +113,7 @@ namespace DCFApixels.DragonECS
             var worldConfig = world.Configs.GetWorldConfigOrDefault();
             if (_items == null)
             {
-                _items = new T[ArrayUtility.NextPow2(worldConfig.PoolComponentsCapacity)];
+                _items = new T[ArrayUtility.CeilPow2Safe(worldConfig.PoolComponentsCapacity)];
             }
             if (_recycledItems == null)
             {
@@ -232,7 +232,7 @@ namespace DCFApixels.DragonECS
             DisableComponent(ref _items[itemIndex]);
             if (_recycledItemsCount >= _recycledItems.Length)
             {
-                Array.Resize(ref _recycledItems, ArrayUtility.NextPow2(_recycledItemsCount));
+                Array.Resize(ref _recycledItems, ArrayUtility.NextPow2Safe(_recycledItemsCount));
             }
             _recycledItems[_recycledItemsCount++] = itemIndex;
             itemIndex = 0;
